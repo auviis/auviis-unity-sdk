@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auviis", "Auviis.csproj", "{8A384F1D-DCEF-AB40-609C-C5B14970CF03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auviis.Plugins", "Auviis.Plugins.csproj", "{8CDBE0E5-E992-A339-6B41-9CEA149DEBAD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A384F1D-DCEF-AB40-609C-C5B14970CF03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A384F1D-DCEF-AB40-609C-C5B14970CF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A384F1D-DCEF-AB40-609C-C5B14970CF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A384F1D-DCEF-AB40-609C-C5B14970CF03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CDBE0E5-E992-A339-6B41-9CEA149DEBAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CDBE0E5-E992-A339-6B41-9CEA149DEBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CDBE0E5-E992-A339-6B41-9CEA149DEBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CDBE0E5-E992-A339-6B41-9CEA149DEBAD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
