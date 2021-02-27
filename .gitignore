@@ -1,1 +1,6 @@
 .DS_Store
+/project/.vs
+/project/.vsconfig
+/project/Library
+/project/obj
+/project/Temp

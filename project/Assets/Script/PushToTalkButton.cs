@@ -6,27 +6,33 @@ public class PushToTalkButton:  Button
     public static bool mouseDown = false;
     void Update()
     {
-    }
-    public void toogle()
-    {
-        mouseDown = !mouseDown;
-        if (mouseDown)
+        if (IsPressed())
         {
-            OnPointerDown();
+            if (!mouseDown)
+            {
+                mouseDown = true;
+                OnPointerDown();
+            }
         }
         else
         {
-            OnPointerUp();
+            if (mouseDown)
+            {
+                mouseDown = false;
+                OnPointerUp();
+            }
         }
     }
     void OnPointerDown()
     {
+    #if !UNITY_EDITOR && UNITY_IPHONE
         AuviisSDK.Auviis_unmuteSend();
-        Debug.Log("down");
+    #endif
     }
     void OnPointerUp()
     {
+#if !UNITY_EDITOR && UNITY_IPHONE
         AuviisSDK.Auviis_muteSend();
-        Debug.Log("up");
+#endif
     }
 }

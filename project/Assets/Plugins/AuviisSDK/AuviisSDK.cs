@@ -1,8 +1,110 @@
-﻿using System;
+﻿using UnityEngine;
+using System.Collections;
+using UnityEngine.EventSystems;
 using System.Runtime.InteropServices;
+using System;
 
-public class AuviisSDK
+public interface AuviisSDKDelegate
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="reason"></param>
+	void onAuviisSDKError(string reason);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="reason"></param>
+    void onAuviisSDKDisconnect(string reason);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="peer_id"></param>
+    void onAuviisSDKInitSuccess(Int64 peer_id);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="peer_id"></param>
+    void onAuviisSDKActivated(Int64 peer_id);
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="channel_id"></param>
+    void onAuviisSDKJoinChannel(Int64 channel_id);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="channel_id"></param>
+    /// <param name="members"></param>
+    void onAuviisSDKJoinChannel(Int64 channel_id, int members);
+}
+public class AuviisSDK: MonoBehaviour
+{
+    AuviisSDKDelegate sdkDelegate = null;
+    // Use this for initialization
+    void Start()
+    {
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    public void setSDKDelegate(AuviisSDKDelegate d)
+    {
+        sdkDelegate = d;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="reason"></param>
+    void onError(string reason)
+    {
+        if (sdkDelegate == null) return;
+        sdkDelegate.onAuviisSDKError(reason);
+    }
+
+    void onDisconnect(string reason)
+    {
+        if (sdkDelegate == null) return;
+        sdkDelegate.onAuviisSDKDisconnect(reason);
+    }
+
+
+    void onInitSuccess(string peer_id)
+    {
+        Debug.Log("AuviisSDK init successfully");
+        if (sdkDelegate == null) return;
+        sdkDelegate.onAuviisSDKInitSuccess(Int64.Parse(peer_id));
+    }
+    void onActivated(string peer_id)
+    {
+        Debug.Log("AuviisSDK has assigned your peer id of " + peer_id);
+        if (sdkDelegate == null) return;
+        sdkDelegate.onAuviisSDKActivated(Int64.Parse(peer_id));
+    }
+    void onJoinChannel(string channel_id)
+    {
+        Auviis_startVoiceStream();
+        Debug.Log("AuviisSDK sdk join successfully, enable voice stream on " + channel_id);
+        if (sdkDelegate == null) return;
+        sdkDelegate.onAuviisSDKJoinChannel(Int64.Parse(channel_id));
+    }
+    void onReceiveChannelMembers(string msg)
+    {
+        string[] prs = msg.Split(',');
+        if (prs.Length < 2) return;
+        Int64 channel_id = Int64.Parse(prs[0]);
+        int members = int.Parse(prs[1]);
+        if (sdkDelegate == null) return;
+        sdkDelegate.onAuviisSDKJoinChannel(channel_id, members);
+    }
+    //
+    //
 #if !UNITY_EDITOR && UNITY_IPHONE
         const string LUADLL = "__Internal";
 #else
@@ -172,8 +274,4 @@ public class AuviisSDK
      */
     [DllImport(LUADLL)]
     public static extern void Auviis_disableAudio();
-
-    public AuviisSDK()
-    {
-    }
 }
