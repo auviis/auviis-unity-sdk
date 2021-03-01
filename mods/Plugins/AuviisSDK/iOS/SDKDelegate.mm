@@ -93,7 +93,7 @@ void SDKDelegate::onTextMessage(int64_t sender_id, int64_t channel_id, std::stri
 void SDKDelegate::onVoiceMessage(int64_t sender_id, int64_t channel_id, std::string msg_id){
 //    std::cout << "onVoiceMessage:" << msg_id;
 //    Auviis::playVoiceMessage(msg_id);
-    UnitySendMessage("AuviisSDK", "onVoiceMessage", msg_id.c_str());
+    UnitySendMessage("AuviisSDK", "onVoiceMessageReceived", msg_id.c_str());
 }
 void SDKDelegate::onVoiceMessageReady(int code, long record_id){
 //    std::cout << "onVoiceMessageReady";

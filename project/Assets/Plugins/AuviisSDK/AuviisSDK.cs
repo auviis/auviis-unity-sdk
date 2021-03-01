@@ -38,6 +38,16 @@ public interface AuviisSDKDelegate
     /// <param name="channel_id"></param>
     /// <param name="members"></param>
     void onAuviisSDKJoinChannel(Int64 channel_id, int members);
+    /// <summary>
+    /// 
+    /// </summary>
+    void onAuviisSDKVoiceMessageReady();
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="msg"></param>
+    void onAuviisSDKVoiceMessageReceived(string msgId);
+
 }
 public class AuviisSDK: MonoBehaviour
 {
@@ -102,6 +112,15 @@ public class AuviisSDK: MonoBehaviour
         int members = int.Parse(prs[1]);
         if (sdkDelegate == null) return;
         sdkDelegate.onAuviisSDKJoinChannel(channel_id, members);
+    }
+    void onVoiceMessageReady(string msg)
+    {
+        sdkDelegate.onAuviisSDKVoiceMessageReady();
+    }
+    void onVoiceMessageReceived(string msg)
+    {
+        Debug.Log(msg);
+        sdkDelegate.onAuviisSDKVoiceMessageReceived(msg);
     }
     //
     //

@@ -19,7 +19,6 @@ public class Main : MonoBehaviour, AuviisSDKDelegate
 		startBt.onClick.AddListener(delegate () { StartSDK(); });
         Button stopBt = GameObject.Find("StopButton").GetComponent<Button>();
         stopBt.onClick.AddListener(delegate () { StopSDK(); });
-
     }
 	
 	// Update is called once per frame
@@ -82,5 +81,14 @@ public class Main : MonoBehaviour, AuviisSDKDelegate
     {
         Debug.Log("onAuviisSDKJoinChannel");
         txtChatStatus.text = "AuviisSDK  joined channel " + channel_id.ToString() + " \nwith " + members.ToString() + " online members";
+    }
+    void AuviisSDKDelegate.onAuviisSDKVoiceMessageReady()
+    {
+        AuviisSDK.Auviis_sendVoiceChat(123);
+    }
+    void AuviisSDKDelegate.onAuviisSDKVoiceMessageReceived(string msgId)
+    {
+        AuviisSDK.Auviis_playVoiceMessage(msgId.ToString());
+        txtChatStatus.text = "Playing received voice message: " + msgId;
     }
 }
