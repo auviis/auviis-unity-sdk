@@ -29,18 +29,18 @@ public class Main : MonoBehaviour, AuviisSDKDelegate
 	{
 		Debug.Log("StartSDK");
         auviisSDK.setSDKDelegate(this);
-#if !UNITY_EDITOR && UNITY_IPHONE
+#if UNITY_IPHONE
         AuviisSDK.Auviis_setUnityCallbacks();
-		AuviisSDK.Auviis_init("6785JH889bhFGKU8904","PnHDEHHEIhjjAvcgQWUbcv");
+#endif
+        AuviisSDK.Auviis_init("6785JH889bhFGKU8904","PnHDEHHEIhjjAvcgQWUbcv");
 		AuviisSDK.Auviis_default_connect();
         txtChatStatus.text = "AuviisSDK is connecting ...";
-#endif
     }
     public void StopSDK()
     {
         Debug.Log("StopSDK");
-#if !UNITY_EDITOR && UNITY_IPHONE
-		AuviisSDK.Auviis_stop();
+#if UNITY_IPHONE || UNITY_ANDROID
+        AuviisSDK.Auviis_stop();
         txtChatStatus.text = "AuviisSDK is stopped";
 #endif
     }
@@ -84,6 +84,7 @@ public class Main : MonoBehaviour, AuviisSDKDelegate
     }
     void AuviisSDKDelegate.onAuviisSDKVoiceMessageReady()
     {
+
         AuviisSDK.Auviis_sendVoiceChat(123);
     }
     void AuviisSDKDelegate.onAuviisSDKVoiceMessageReceived(string msgId)
