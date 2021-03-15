@@ -28,10 +28,11 @@ public class UnityPlayerActivity extends Activity implements AuviisDelegate
         setContentView(mUnityPlayer);
         mUnityPlayer.requestFocus();
         //
-        AuviisClass.loadLibrary(this);
         AuviisClass.getInstance().setDelegate(this);
+        AuviisClass.loadLibrary(this);
         //checking if you have the permission
         AuviisClass.getInstance().requestAudioPermission();
+
     }
 
     @Override protected void onNewIntent(Intent intent)
@@ -129,46 +130,52 @@ public class UnityPlayerActivity extends Activity implements AuviisDelegate
 
     @Override
     public void onDisableAudioPermission() {
-
+        Log.i("AuviisSDK","onDisableAudioPermission");
     }
 
     @Override
     public void onSDKInitSuccess(long peer_id) {
         Log.i("AuviisSDK","AuviisSDK init successfully");
+        UnityPlayer.UnitySendMessage("AuviisSDK", "onInitSuccess", String.valueOf(peer_id));
     }
 
     @Override
     public void onSDKActivated(long peer_id) {
-        Log.i("AuviisSDK","AuviisSDK has assigned your peer id of " + peer_id);
+        Log.i("AuviisSDK","AuviisSDK has assigned your peer with id " + peer_id);
+        UnityPlayer.UnitySendMessage("AuviisSDK", "onActivated", String.valueOf(peer_id));
     }
 
     @Override
     public void onSDKError(int code, String reason) {
         Log.i("AuviisSDK","AuviisSDK has error " + reason);
+        UnityPlayer.UnitySendMessage("AuviisSDK", "onError", reason);
     }
 
     @Override
-    public void onSDKJoinChannel(int i, long l, long l1, String s) {
-
+    public void onSDKJoinChannel(int code, long channel_id, long member_count, String msg) {
+        UnityPlayer.UnitySendMessage("AuviisSDK", "onJoinChannel", String.valueOf(channel_id));
     }
 
     @Override
-    public void onReceiveChannelMembers(long l, long[] longs) {
-
+    public void onReceiveChannelMembers(long channel_id, long[] peers) {
+        String msg = String.valueOf(channel_id) + "," + String.valueOf(peers.length);
+        UnityPlayer.UnitySendMessage("AuviisSDK", "onReceiveChannelMembers", msg);
     }
 
     @Override
-    public void onSDKTextMessage(long l, long l1, String s) {
-
+    public void onSDKTextMessage(long sender_id, long channel_id, String msg) {
+        UnityPlayer.UnitySendMessage("AuviisSDK", "onTextMessage", msg);
     }
 
     @Override
-    public void onSDKVoiceMessage(long l, long l1, String s) {
-
+    public void onSDKVoiceMessage(long sender_id, long channel_id, String msg_id) {
+        Log.i("AuviisSDK","onSDKVoiceMessage");
+        UnityPlayer.UnitySendMessage("AuviisSDK", "onVoiceMessageReceived", msg_id);
     }
 
     @Override
-    public void onSDKVoiceMessageReady(int i, long l) {
-
+    public void onSDKVoiceMessageReady(int code, long record_id) {
+        Log.i("AuviisSDK","onSDKVoiceMessageReady");
+        UnityPlayer.UnitySendMessage("AuviisSDK", "onVoiceMessageReady","");
     }
 }

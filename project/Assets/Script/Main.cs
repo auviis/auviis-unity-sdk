@@ -84,7 +84,7 @@ public class Main : MonoBehaviour, AuviisSDKDelegate
     }
     void AuviisSDKDelegate.onAuviisSDKVoiceMessageReady()
     {
-
+        Debug.Log("onAuviisSDKVoiceMessageReady");
         AuviisSDK.Auviis_sendVoiceChat(123);
     }
     void AuviisSDKDelegate.onAuviisSDKVoiceMessageReceived(string msgId)

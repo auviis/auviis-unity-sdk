@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class PushToTalkButton:  Button
+public class PushToRecord :  Button
 {
     public static bool mouseDown = false;
     void Update()
@@ -25,14 +25,14 @@ public class PushToTalkButton:  Button
     }
     void OnPointerDown()
     {
-    #if !UNITY_EDITOR && UNITY_IPHONE
-        AuviisSDK.Auviis_unmuteSend();
+#if UNITY_IPHONE || UNITY_ANDROID
+        AuviisSDK.Auviis_recordVoice();
     #endif
     }
     void OnPointerUp()
     {
-#if !UNITY_EDITOR && UNITY_IPHONE
-        AuviisSDK.Auviis_muteSend();
+#if UNITY_IPHONE || UNITY_ANDROID
+        AuviisSDK.Auviis_stopRecord();
 #endif
     }
 }
